@@ -14,7 +14,7 @@ The open the go.main file and compile/run it in the terminal to get started to u
 # Usage 
 Running the code gives the following result:
 
-<img src="https://github.com/HarshitNITT/C-Parser/blob/master/images/demo.jpg" />
+<img src="https://github.com/HarshitNITT/C-Parser/blob/master/images/demo.png" />
 
 The First Part of the Output is the stream of tokens generated.
 The Second Part of the Output is the **Recursive Descent Parser** Output. 
