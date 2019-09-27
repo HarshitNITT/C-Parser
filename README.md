@@ -24,7 +24,7 @@ It can deal with arithmetic expressions and declaration(int) expressions only.
 ~~~
 a=b+c;b=(c+d);f=(y+10)/2;
 ~~~
-### Declarative Expressions:
+### Declaration Expressions:
 ~~~
 int a=b+c,b=(c+d); int f=(y+10)/2;
 ~~~
