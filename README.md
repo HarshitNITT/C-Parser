@@ -18,6 +18,16 @@ Running the code gives the following result:
 
 The First Part of the Output is the stream of tokens generated.
 The Second Part of the Output is the **Recursive Descent Parser** Output. 
+## Note
+It can deal with arithmetic expressions and declaration(int) expressions only.
+### Arithmetic Expressions:
+~~~
+a=b+c;b=(c+d);f=(y+10)/2;
+~~~
+### Declarative Expressions:
+~~~
+int a=b+c,b=(c+d); int f=(y+10)/2;
+~~~
 # Languages
 Golang
 # License
