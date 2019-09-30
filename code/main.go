@@ -244,7 +244,7 @@ for i:=0;i<len(m);{
         
         i++
     }
-     if m[i].values[0]!=tokenEof {
+     if m[i].values[0]==tokenWhitespace {
         
         i++
     }
