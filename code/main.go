@@ -281,7 +281,7 @@ func E(index *int,m map[int]token_data,val int){
  
 func Tprime(index *int,m map[int]token_data,val int){
  if m[*index].values[1]=="," || m[*index].values[1]==";" || flag==1{
-    fmt.Println("TPrime() Flag",flag)
+    //fmt.Println("TPrime() Flag",flag)
         
         return
             }
@@ -296,7 +296,7 @@ if m[*index].values[0]==tokenEof {
       //fmt.Println("In TPrime()",*index)  
       if m[*index].values[0] == tokenOperator && ((m[*index].values[1] == "="&&val==0) || (m[*index].values[1] != "="&&val!=0)) {
         *index++
-        fmt.Println("In TPrime()",*index,flag)  
+        //fmt.Println("In TPrime()",*index,flag)  
         check(index,m,val+1)
         
         Tprime(index,m,val+1)
