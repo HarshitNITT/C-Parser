@@ -42,8 +42,8 @@ var wordRegexp = regexp.MustCompile("[A-Za-z]+")
 var whitespaceRegexp = regexp.MustCompile("[\\s]+")
 var specialRegexp = regexp.MustCompile("[\\(\\)\\[\\]\\{\\}]{1}")
 var punctuationRegexp = regexp.MustCompile("[\\:\\;\\,]+")
-var reloperatorRegexp = regexp.MustCompile("[\\=\\<\\>\\!]+")
-var operatorRegexp = regexp.MustCompile("[\\+\\-\\*\\/\\%]+")
+var reloperatorRegexp = regexp.MustCompile("[\\<\\>\\!]+")
+var operatorRegexp = regexp.MustCompile("[\\+\\-\\*\\/\\%\\=]+")
 var numberRegexp = regexp.MustCompile("[0-9]+")
 var newlineRegexp = regexp.MustCompile("[\n]+")
 var primitiveRegexp = regexp.MustCompile("int")
@@ -221,8 +221,12 @@ for i:=0;i<len(m);{
         
         i++
     }
-    E(&i,m)
+    E(&i,m,-1)
     r:=0
+     if m[i].values[0]==tokenWhitespace {
+        
+        i++
+    }
     if flag==1 {
         break;
     }
@@ -230,17 +234,20 @@ for i:=0;i<len(m);{
         r=1
 
     }
-    //fmt.Println(i)
-    
-    
-    //fmt.Println(flag)
-    //fmt.Println(m[i].values[1])
-    i++
-    if m[i].values[0]==tokenWhitespace {
+     if m[i].values[1]!="," && m[i].values[1]!=";" {
+        
+        flag=1
+        break
+    }
+   
+    if m[i].values[1]=="," || m[i].values[1]==";" {
         
         i++
     }
-    
+     if m[i].values[0]!=tokenEof {
+        
+        i++
+    }
     if m[i].values[0]==tokenEof {
         
         if r==1 {
@@ -254,7 +261,7 @@ for i:=0;i<len(m);{
 
 }
 }
-func E(index *int,m map[int]token_data ){
+func E(index *int,m map[int]token_data,val int){
      if m[*index].values[1]=="," || m[*index].values[1]==";" || flag==1{
         //fmt.Println("E() Flag",flag)
         flag=1
@@ -268,13 +275,13 @@ func E(index *int,m map[int]token_data ){
      if m[*index].values[0]==tokenWhitespace{
     *index++} 
        //fmt.Println("In E()",*index)    
-       check(index,m,0);
-      Tprime(index,m,0);
+       check(index,m,val+1);
+      Tprime(index,m,val+1);
 }
  
 func Tprime(index *int,m map[int]token_data,val int){
  if m[*index].values[1]=="," || m[*index].values[1]==";" || flag==1{
-    //fmt.Println("TPrime() Flag",flag)
+    fmt.Println("TPrime() Flag",flag)
         
         return
             }
@@ -287,9 +294,9 @@ if m[*index].values[0]==tokenEof {
             
       }
       //fmt.Println("In TPrime()",*index)  
-      if m[*index].values[0] == tokenOperator || m[*index].values[0] == tokenRelop {
+      if m[*index].values[0] == tokenOperator && ((m[*index].values[1] == "="&&val==0) || (m[*index].values[1] != "="&&val!=0)) {
         *index++
-        //fmt.Println("In TPrime()",*index)  
+        fmt.Println("In TPrime()",*index,flag)  
         check(index,m,val+1)
         
         Tprime(index,m,val+1)
@@ -330,7 +337,7 @@ if m[*index].values[1]=="," || m[*index].values[1]==";" || flag==1{
       }else if m[*index].values[1]== "("{
             //fmt.Println("In check()",*index,m[*index].values[1]) 
             *index++
-            E(index,m)
+            E(index,m,0)
             //fmt.Println( m[*index].values[1])
             if m[*index].values[1] == ")" {
                   *index++
